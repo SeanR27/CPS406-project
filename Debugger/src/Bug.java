@@ -5,6 +5,7 @@ public class Bug
     private Date fixed;
     private String description;
     private User reporter;
+    private String status = "unresolved";
     final private int ID;
     private static int count = 0;
 
@@ -40,7 +41,18 @@ public class Bug
 
     public void resolve()
     {
+        this.status = "resolved";
         this.fixed = new Date();
+    }
+
+    public void start()
+    {
+        this.status = "Work in Progress";
+    }
+
+    public String getStatus()
+    {
+        return this.status;
     }
 
     public void updateDescription(String description)

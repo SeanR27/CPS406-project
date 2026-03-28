@@ -1,10 +1,12 @@
 import java.util.Scanner;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 public class App
 {   
     final static DisplayDatabase data = new DisplayDatabase();
     public static void main(String[] args) throws Exception
     {
-        boolean active = true;
+        boolean active = false;
         Scanner in = new Scanner(System.in);
         String saved = "";
         while(active)
@@ -49,5 +51,16 @@ public class App
                 }
             }
         in.close();
+
+        JFrame j = new JFrame("Display Database");
+        MainDashboard m = new MainDashboard();
+        j.add(m);
+        j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        j.pack();
+        JScrollPane scroll = new JScrollPane(m);
+        j.add(scroll);
+        j.setVisible(true);
+
+
     }
 }

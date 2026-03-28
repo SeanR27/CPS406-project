@@ -6,7 +6,7 @@ public class DisplayDatabase
     ArrayList<Bug> bugs = new ArrayList<>(); 
     public DisplayDatabase()
     {
-
+        
     }
     public void recordBug(String description)
     {
