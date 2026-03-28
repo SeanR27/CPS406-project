@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 public class MainDashboard extends JPanel
@@ -19,8 +20,31 @@ public class MainDashboard extends JPanel
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         JButton logButton = new JButton("View Log");
+        
+
+
+
         JButton editButton = new JButton("Edit Bug");
-        JButton viewButton = new JButton("Add Bug");
+
+        JButton addButton = new JButton("Add Bug");
+        
+        addButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JFrame bugInsertWindow = new JFrame("Bug Insertion Menu");
+            JPanel holder = new JPanel(new GridBagLayout());
+            GridBagConstraints mc = new GridBagConstraints();
+            mc.gridx = 0;
+            mc.gridy = 0;
+            
+            
+            //JLabel 
+            
+        }});
+        
+        
+        
+        
         JLabel searchLabel = new JLabel("Filter by keyword: ");
         TextField searchField = new TextField(6);
         c.gridx = 0;
@@ -31,8 +55,8 @@ public class MainDashboard extends JPanel
         c.gridx = 3;
         this.add(editButton,c);
         c.gridx = 5;
-        this.add(viewButton,c);
-        c.gridx = 7;
+        this.add(addButton,c);
+        c.gridx = 8;
         this.add(searchLabel,c);
         c.gridx = 12;
         c.gridwidth = 6;
@@ -100,4 +124,6 @@ public class MainDashboard extends JPanel
         }
 
     }
+
 }
+    
