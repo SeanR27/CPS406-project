@@ -1,4 +1,3 @@
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.TextField;
@@ -29,12 +28,11 @@ public class MainDashboard extends JPanel
         c.gridwidth = 2;
         this.add(logButton,c);
         c.gridx = 1;
-        this.add(editButton,c);
         c.gridx = 3;
-        c.gridwidth = 2;
-        this.add(viewButton,c);
+        this.add(editButton,c);
         c.gridx = 5;
-        c.gridwidth = 4;
+        this.add(viewButton,c);
+        c.gridx = 7;
         this.add(searchLabel,c);
         c.gridx = 12;
         c.gridwidth = 6;
@@ -67,7 +65,6 @@ public class MainDashboard extends JPanel
         c.gridy = 2;
         c.gridwidth = 9;
         this.add(bugListHolder,c);
-        this.setPreferredSize(new Dimension(600,200));
         for(Bug b : bugs)
             {
                 bugListHolder.add(new BugRenderer(b),internal);
