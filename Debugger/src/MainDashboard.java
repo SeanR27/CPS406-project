@@ -16,10 +16,6 @@ public class MainDashboard extends JPanel
     ArrayList<Bug> bugs = new ArrayList<>(); 
     public MainDashboard()
     {
-        bugs.add(new Bug("Editing test 1 editing", new User("JOHN DOE")));
-        bugs.add(new Bug("Strange bump on the road", new User("JANE DOE")));
-        bugs.add(new Bug("Odd failure in system A", new User("Undefined")));
-        bugs.add(new Bug("Awesome reference!", new User("Sand sous l'Histoire")));
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         JButton logButton = new JButton("View Log");
@@ -77,11 +73,20 @@ public class MainDashboard extends JPanel
             holder.setPreferredSize(new Dimension(500,500));
             holder.add(bugHolder,c);
 
+            g.gridx = 0;
+            g.gridy = 0;
+            g.gridwidth = 6;
+
             for(Bug b : bugs)
             {
                 bugHolder.add(new BugRenderer(b),g);
-                g.gridy++;
+                g.gridy+=4;
             }
+
+            bugViewWindow.add(holder);
+            bugViewWindow.setPreferredSize(new Dimension(500,500));
+            bugViewWindow.pack();
+            bugViewWindow.setVisible(true);
 
             searchField.addActionListener(new ActionListener()
             {
@@ -95,7 +100,7 @@ public class MainDashboard extends JPanel
                     for(Bug b : filteredList)
                     {
                         bugHolder.add(new BugRenderer(b),g);
-                        g.gridy++;
+                        g.gridy+=3;
                     }
 
 
@@ -103,10 +108,7 @@ public class MainDashboard extends JPanel
 
 
             });
-            bugViewWindow.add(holder);
-            bugViewWindow.setPreferredSize(new Dimension(500,500));
-            bugViewWindow.pack();
-            bugViewWindow.setVisible(true);
+            
         }
     }
 
@@ -203,22 +205,24 @@ public class MainDashboard extends JPanel
         public BugRenderer(Bug b)
         {
             this.setLayout(new GridBagLayout());
+            this.setAlignmentX(LEFT_ALIGNMENT);
             GridBagConstraints c = new GridBagConstraints();
+            c.anchor = GridBagConstraints.WEST;
             JLabel bugID = new JLabel("BUG ID: " + b.getID());
             c.gridx = 0;
             c.gridy = 0;
-            c.gridwidth = 2;
+            c.gridwidth = 3;
             this.add(bugID,c);
             JLabel status = new JLabel("Status: " + b.getStatus());
             c.gridx = 0;
             c.gridy = 1;
-            c.gridwidth = 2;
+            c.gridwidth = 3;
             this.add(status,c);
             // potentially change to JTextField?
             JLabel description = new JLabel(b.getDescription());
-            c.gridx = 2;
-            c.gridy = 0;
-            c.gridwidth = 4;
+            c.gridx = 0;
+            c.gridy = 2;
+            c.gridwidth = 5;
             this.add(description,c);
 
         }
