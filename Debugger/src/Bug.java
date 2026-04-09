@@ -8,6 +8,7 @@ public class Bug
     private String status = "unresolved";
     final private int ID;
     private static int count = 0;
+    private String location;
 
     public Bug(String description, User reporter)
     {

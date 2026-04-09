@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 public class MainDashboard extends JPanel
 {
     ArrayList<Bug> bugs = new ArrayList<>(); 
@@ -29,7 +30,7 @@ public class MainDashboard extends JPanel
         JButton addButton = new JButton("Add Bug");
         
         addButton.addActionListener(new NewBugButton());
-        
+        editButton.addActionListener(new BugEditButton());
         
         c.gridx = 0;
         c.gridy = 0;
@@ -40,11 +41,114 @@ public class MainDashboard extends JPanel
         this.add(editButton,c);
         c.gridx = 4;
         this.add(addButton,c);
+        this.setPreferredSize(new Dimension(300,100));
 
 
     }
 
     
+    private class BugEditButton implements ActionListener
+    {
+        Bug current;
+        private String[] convertToList(ArrayList<Bug> list)
+        {
+            if(list.isEmpty())
+            {
+                String[] x = {"No bugs here!"};
+            }
+            String[] out = new String[list.size()];
+            for(int i = 0; i < out.length; i++)
+                {
+                    out[i] = list.get(i).getDescription();
+                }
+            
+            return out;
+
+        }
+
+        private static Bug fetchBugByDescription(String description, ArrayList<Bug> bugs)
+        {
+            Bug ret = new NullBug();                
+            for(Bug b : bugs)
+                {
+                    if(b.getDescription().equals(description))
+                        return b;
+                }
+            return ret;
+                
+        }
+
+        private void updateCurrent(Bug b)
+        {
+            current = b;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            JFrame bugEditWindow = new JFrame("Bug Editing");
+            JPanel holder = new JPanel(new GridBagLayout());
+            GridBagConstraints c = new GridBagConstraints();
+
+            JLabel selector = new JLabel("Select bug to edit: ");
+            holder.add(selector,c);
+            JButton selectArea = new JButton("Select Location");
+            
+            current = fetchBugByDescription(selectArea.getText(), bugs);
+            c.gridwidth = 2;
+            c. gridx = 2;
+            holder.add(selectArea,c);
+            bugEditWindow.add(holder);
+            bugEditWindow.pack();
+            bugEditWindow.setVisible(true);
+
+
+            JPanel bugInfoHolder = new JPanel(new GridBagLayout());
+            GridBagConstraints g = new GridBagConstraints();
+
+            holder.setPreferredSize(new Dimension(500,500));
+            holder.add(bugInfoHolder,c);
+            
+            g.gridx = 0;
+            g.gridy = 0;
+            g.gridwidth = 8;
+            
+            JTextArea desc = new JTextArea();
+            if(!(current instanceof NullBug) && current != null)
+            {
+                desc.setText(current.getDescription());
+            }
+            
+            bugInfoHolder.add(desc,g);
+
+            selectArea.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    String toEdit = (String) JOptionPane.showInputDialog(
+                        null,
+                        "Select a Bug to Edit: ",
+                        "BUG SELECTION",
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        convertToList(bugs),
+                        convertToList(bugs)[0]
+
+                    );
+                    selectArea.setText(toEdit);
+                    updateCurrent(fetchBugByDescription(toEdit, bugs));
+                    
+                    
+                    
+                    
+                }
+            });
+            
+
+        }
+
+    }
+
     private class BugLogButton implements ActionListener
     {
         @Override
@@ -230,4 +334,3 @@ public class MainDashboard extends JPanel
     }
 
 }
-    
